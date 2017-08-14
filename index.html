@@ -27,7 +27,7 @@ div {
 <span id="wins">Wins: </span>
 <div id="cword">
 <div>CURRENT WORD</div>
-<div id="dottedword">_   _    _    _   _      _ </div>
+<div id="dottedword">_ _ _ _ _ _ </div>
 </div>
 <div>NUMBER OF GUESSES REMAINING</div>
 <span id="remguess"></span>
@@ -35,61 +35,98 @@ div {
 <span id="guessedletters"></span>
 </div>
 <script>
+document.getElementById("dottedword").innerHTML = "_ _ _ _ _ _";
 var guessallowed = 15;
-var bandarr = ["mokhov","caspian","emancipator","ifthesetrees","tiesto","armin","oakenfold","orjannielsen","charris","mogwai","hammock","daftpunk"];
+var bandarr = ["mokhov","caspian","emancipator","ifthesetrees","tiesto","armin","oakenfold","orjannielsen","charris","mogwai","hammock","daftpunk","pvandyk","godisast",
+				"xxintro","daysofstatic","maserati","redsparrowes","russiancicrcle","explosioninsky"];
 var gameOb = {
 	    arr:bandarr,
-	    wins:0;
+	    wins:0,
+	    curbanddocstring:"",
 	    currentband:"empty",
-	    matchband:"";
+	    matchband:[],
 	    gamestarted:false,
 	    wordguessed:false,
-	    wronguess:true,
 	    guessremaining:15,
 	    guessedletters:[],
+	    matchlen:0,
 	    resetGame:function(){
 	    	console.log("game reset");
+	    	this.matchlen = 0;
 	    	this.wordguessed = false;
 	    	this.guessremaining = 15;
-	    	this.matchband = "";
-    	
+	    	var arrindex = Math.floor((Math.random() * 20) + 1);
+          	this.currentband = this.arr[arrindex-1];
+          	this.curbanddocstring ="";
+          	console.log(arrindex);
+          	console.log(this.currentband);
+          	this.matchband  = [];
+        	this.guessedletters = [];
+       
+        	console.log(this.currentband);
+	    	for(var i =0;i < this.currentband.length;i++)
+          		{
+          			this.matchband.push('_');
+          			this.matchband.push(' ');
+          			this.curbanddocstring = this.curbanddocstring + "_ ";
+          		}
+          	console.log(this.matchband.length);
+          	console.log(this.matchband);
+          	document.getElementById("remguess").innerHTML = this.guessremaining;
+          	document.getElementById("guessedletters").innerHTML = "";
+    		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
 	    },
 	    gameControl:function(keyhit){
-	    	if(this.guessremaining === guessallowed){
+	    	if(this.guessremaining === guessallowed && this.gamestarted == false){
+	    		this.gamestarted = true;
+	    		this.matchlen = 0;
           		var arrindex = Math.floor((Math.random() * 12) + 1);
           		this.currentband = this.arr[arrindex];
           		for(var i =0;i < this.currentband.length;i++)
           		{
-          			this.matchband = this.matchband + " ";
+          			this.matchband.push('_');
+          			this.matchband.push(' ');
+          			this.curbanddocstring = this.curbanddocstring + "_ ";
           		}
-          		console.log(matchband.length);
-          		console.log(matchband);
+          		console.log(this.currentband);
+          		console.log(this.matchband.length);
+          		console.log(this.matchband);
+          		document.getElementById("guessedletters").innerHTML = "";
+          		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
+          		document.getElementById("remguess").innerHTML = this.guessremaining;
 			}
 			else {
 					if(this.guessedletters.indexOf(keyhit) == -1){
 						this.guessedletters.push(keyhit);
 						this.guessremaining = this.guessremaining -1;
 						this.displayguessedLetter(keyhit);				
-					}
-
+					
+					var text="";
 					if( this.currentband.indexOf(keyhit) != -1){
-						var text = document.getElementbyId("dottedword").innerHTML;
+						console.log("key match found:  " + keyhit);
 						console.log(text);
 						for(var i=0;i < this.currentband.length ;i++){
 							if(this.currentband[i] == keyhit){
 								//store the indexes for update 
-								text[i+1] = keyhit;
-							    this.matchband[i] = keyhit;
+								console.log(this.currentband[i] + "  :"  + i + keyhit)
+							    this.matchband[i*2] = keyhit;
+							    this.matchlen = this.matchlen + 1;
 							}
 						}
-						document.getElementbyId("dottedword").innerHTML = text;
-						if (this.currentband == this.matchband){
+						for (var i=0;i < this.matchband.length;i++){
+							text = text + this.matchband[i]
+						}
+						console.log(this.matchband);
+						document.getElementById("dottedword").innerHTML = text;
+						if (this.currentband.length == this.matchlen){
 							this.wins = this.wins +1;
 							this.wordguessed = true;
-							document.getElementbyId("wins").innerHTML = this.wins;
+							document.getElementById("wins").innerHTML = "Wins: " + this.wins;
 						}
 					}
+				}
 					if(this.guessremaining == 0 || this.wordguessed == true){
+						console.log("noguessremaningreset");
 						this.resetGame();
 					}
 
@@ -98,12 +135,13 @@ var gameOb = {
 	 	},
 	    displayguessedLetter:function(keyhit) {
 	    	console.log(this.guessedletters);
-	    	var gstring='';
-	    	for(var i=0;i < guessedletters.length;i++){
-               gstring = gstring + guessedletters[i] + " ";
+	    	var gstring=" ";
+	    	for(var i=0;i < this.guessedletters.length;i++){
+               gstring = gstring + this.guessedletters[i] + " ";
 	    	}
-	    	document.getElementbyId("guessedletters").innerHTML = gstring;
-			document.getElementbyId("remguess").innerHTML = this.guessremaining;
+	    	console.log(gstring);
+	    	document.getElementById("guessedletters").innerHTML = gstring;
+			document.getElementById("remguess").innerHTML = this.guessremaining;
 
 	    }
 };
@@ -111,10 +149,7 @@ var gameOb = {
 console.log(gameOb);
 
 document.onkeyup = function(event) {
-    var keyHit = event.key;
-    if(gameOb.gamestarted === false){
-    	gameOb.gamestarted = true;
-    }
+    var keyhit = event.key;
    gameOb.gameControl(keyhit);
 };
 
