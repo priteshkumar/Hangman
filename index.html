@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<title>Hangman</title>
+<style>
+body{
+	background:black;
+	color:green;
+}
+div {
+	width:200px;
+	margin-bottom:15px;
+}
+#hgman{
+	width:768px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:100px;
+	margin-bottom:50px;
+}
+</style>
+</head>
+<body>
+<div id="hgman">
+<h3>PRESS ANY KEY TO GET STARTED.</h3>
+<span id="wins">Wins: </span>
+<div id="cword">
+<div>CURRENT WORD</div>
+<div id="dottedword">_   _    _    _   _      _ </div>
+</div>
+<div>NUMBER OF GUESSES REMAINING</div>
+<span id="remguess"></span>
+<div>LETTERS ALREADY GUESSED</div>
+<span id="guessedletters"></span>
+</div>
+<script>
+var guessallowed = 15;
+var bandarr = ["mokhov","caspian","emancipator","ifthesetrees","tiesto","armin","oakenfold","orjannielsen","charris","mogwai","hammock","daftpunk"];
+var gameOb = {
+	    arr:bandarr,
+	    wins:0;
+	    currentband:"empty",
+	    matchband:"";
+	    gamestarted:false,
+	    wordguessed:false,
+	    wronguess:true,
+	    guessremaining:15,
+	    guessedletters:[],
+	    resetGame:function(){
+	    	console.log("game reset");
+	    	this.wordguessed = false;
+	    	this.guessremaining = 15;
+	    	this.matchband = "";
+    	
+	    },
+	    gameControl:function(keyhit){
+	    	if(this.guessremaining === guessallowed){
+          		var arrindex = Math.floor((Math.random() * 12) + 1);
+          		this.currentband = this.arr[arrindex];
+          		for(var i =0;i < this.currentband.length;i++)
+          		{
+          			this.matchband = this.matchband + " ";
+          		}
+          		console.log(matchband.length);
+          		console.log(matchband);
+			}
+			else {
+					if(this.guessedletters.indexOf(keyhit) == -1){
+						this.guessedletters.push(keyhit);
+						this.guessremaining = this.guessremaining -1;
+						this.displayguessedLetter(keyhit);				
+					}
+
+					if( this.currentband.indexOf(keyhit) != -1){
+						var text = document.getElementbyId("dottedword").innerHTML;
+						console.log(text);
+						for(var i=0;i < this.currentband.length ;i++){
+							if(this.currentband[i] == keyhit){
+								//store the indexes for update 
+								text[i+1] = keyhit;
+							    this.matchband[i] = keyhit;
+							}
+						}
+						document.getElementbyId("dottedword").innerHTML = text;
+						if (this.currentband == this.matchband){
+							this.wins = this.wins +1;
+							this.wordguessed = true;
+							document.getElementbyId("wins").innerHTML = this.wins;
+						}
+					}
+					if(this.guessremaining == 0 || this.wordguessed == true){
+						this.resetGame();
+					}
+
+				}
+
+	 	},
+	    displayguessedLetter:function(keyhit) {
+	    	console.log(this.guessedletters);
+	    	var gstring='';
+	    	for(var i=0;i < guessedletters.length;i++){
+               gstring = gstring + guessedletters[i] + " ";
+	    	}
+	    	document.getElementbyId("guessedletters").innerHTML = gstring;
+			document.getElementbyId("remguess").innerHTML = this.guessremaining;
+
+	    }
+};
+
+console.log(gameOb);
+
+document.onkeyup = function(event) {
+    var keyHit = event.key;
+    if(gameOb.gamestarted === false){
+    	gameOb.gamestarted = true;
+    }
+   gameOb.gameControl(keyhit);
+};
+
+</script>
+</body>
+</html>
+
