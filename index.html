@@ -2,29 +2,71 @@
 <html lang="en-US">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hangman</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <style>
+
+.jumbotron{
+	text-align: center;
+	background-image: url(./assets/images/postrock2.jpg);
+}
+#head{
+	color:#212121;
+	font-weight:bold;
+	font-size: 60px;
+
+
+}
 body{
 	background:black;
-	color:green;
+	color:blue;
+
 }
-div {
+.divborder{
+	border:5px dotted white;
+	
+}
+.bandimg{
 	width:200px;
-	margin-bottom:15px;
+	height:200px;
+
+}
+#postrinfo{
+	padding-bottom:5px;
 }
 #hgman{
-	width:768px;
+
+	width:100%;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top:100px;
+	margin-top:50px;
 	margin-bottom:50px;
+	text-align: center;
+	padding-bottom:20px;
 }
 </style>
 </head>
 <body>
+<div class="container">
+<div class="jumbotron">
+<h1 id="head">HANGMAN</h1>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="container col-sm-offset-2">
+<div class ="row">
+<div class="col-xs-12 col-sm-4 col-md-4 divborder">
+<img src="./assets/images/postrock3.jpg" class="img-responsive bandimg">
+<p id="postrinfo">Postrock music is awesome. Its suited for coding.
+Tunes are mellow and you need to be thinkful</p>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 divborder">
 <div id="hgman">
 <h3>PRESS ANY KEY TO GET STARTED.</h3>
-<span id="wins">Wins: </span>
+<span id="wins">WINS: </span>
 <div id="cword">
 <div>CURRENT WORD</div>
 <div id="dottedword">_ _ _ _ _ _ </div>
@@ -33,6 +75,10 @@ div {
 <span id="remguess"></span>
 <div>LETTERS ALREADY GUESSED</div>
 <span id="guessedletters"></span>
+<div id="audiodiv">
+<audio id="aplay" src="./assets/audio/mokhov.mp3"></audio>
+</div>
+</div>
 </div>
 <script>
 document.getElementById("dottedword").innerHTML = "_ _ _ _ _ _";
@@ -122,6 +168,17 @@ var gameOb = {
 							this.wins = this.wins +1;
 							this.wordguessed = true;
 							document.getElementById("wins").innerHTML = "Wins: " + this.wins;
+							var apl = document.getElementById("aplay");
+							apl.addEventListener('seeked',function(){
+								apl.play();
+							},true);
+							apl.currentTime = 1.0;
+							apl.addEventListener('timeupdate',function(){
+								if (apl.currentTime > 6){
+									apl.pause();
+								}
+							});
+
 						}
 					}
 				}
