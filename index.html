@@ -27,13 +27,13 @@ body{
 	border:5px dotted white;
 	
 }
-.bandimg{
+#bandimg{
 	width:200px;
 	height:200px;
 
 }
 #postrinfo{
-	padding-bottom:5px;
+	padding-bottom:100px;
 }
 #hgman{
 
@@ -44,6 +44,22 @@ body{
 	margin-bottom:50px;
 	text-align: center;
 	padding-bottom:20px;
+}
+#cword{
+	margin-top:15px;
+}
+#dottedword{
+	margin-top:20px;
+	margin-bottom:20px;
+}
+#remguess{
+	margin-bottom:20px;
+}
+#guessedletter{
+	margin-top:20px;
+}
+#gletters{
+	margin-top:20px;
 }
 </style>
 </head>
@@ -59,7 +75,7 @@ body{
 <div class="container col-sm-offset-2">
 <div class ="row">
 <div class="col-xs-12 col-sm-4 col-md-4 divborder">
-<img src="./assets/images/postrock3.jpg" class="img-responsive bandimg">
+<img src="./assets/images/postrock3.jpg" class="img-responsive" id="bandimg">
 <p id="postrinfo">Postrock music is awesome. Its suited for coding.
 Tunes are mellow and you need to be thinkful</p>
 </div>
@@ -72,9 +88,10 @@ Tunes are mellow and you need to be thinkful</p>
 <div id="dottedword">_ _ _ _ _ _ </div>
 </div>
 <div>NUMBER OF GUESSES REMAINING</div>
-<span id="remguess"></span>
-<div>LETTERS ALREADY GUESSED</div>
-<span id="guessedletters"></span>
+<span id="remguess">15</span>
+
+<div id="gletters">LETTERS ALREADY GUESSED</div>
+<span id="guessedletters"> </span>
 <div id="audiodiv">
 <audio id="aplay" src="./assets/audio/mokhov.mp3"></audio>
 </div>
@@ -85,8 +102,32 @@ document.getElementById("dottedword").innerHTML = "_ _ _ _ _ _";
 var guessallowed = 15;
 var bandarr = ["mokhov","caspian","emancipator","ifthesetrees","tiesto","armin","oakenfold","orjannielsen","charris","mogwai","hammock","daftpunk","pvandyk","godisast",
 				"xxintro","daysofstatic","maserati","redsparrowes","russiancicrcle","explosioninsky"];
+var bandimages = {
+					mokhov:"./assets/images/mokhov.jpg",
+					caspian:"./assets/images/caspian.jpg",
+					emancipator:"./assets/images/postrock3.jpg",
+					ifthesetrees:"./assets/images/ifthesetrees.jpg",
+					tiesto:"./assets/images/oakenfold.jpg",
+					armin:"./assets/images/armin.jpg",
+					oakenfold:"./assets/images/oakenfold.jpg",
+					orjannielsen:"./assets/images/mos.jpg",
+					charris:"./assets/images/mountain.jpg",
+					mogwai:"./assets/images/postrock4.jpg",
+					hammock:"./assets/images/postrock2.jpg",
+					daftpunk:"./assets/images/postrock1.jpg",
+					pvandyk:"./assets/images/oakenfold.jpg",
+					godisast:"./assets/images/astro.jpg",
+					xxintro:"./assets/images/astro.jpg",
+					daysofstatic:"./assets/images/postrock2.jpg",
+					maserati:"./assets/images/astro.jpg",
+					redsparrowes:"./assets/images/mos.jpg",
+					russiancicrcle:"./assets/images/explosionsinsky.jpg",
+					explosioninsky:"./assets/images/explosionsinsky.jpg"
+};
+
 var gameOb = {
 	    arr:bandarr,
+	    imgmap:bandimages,
 	    wins:0,
 	    curbanddocstring:"",
 	    currentband:"empty",
@@ -121,6 +162,7 @@ var gameOb = {
           	document.getElementById("remguess").innerHTML = this.guessremaining;
           	document.getElementById("guessedletters").innerHTML = "";
     		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
+    		document.getElementById("bandimg").src = this.imgmap[this.currentband];
 	    },
 	    gameControl:function(keyhit){
 	    	if(this.guessremaining === guessallowed && this.gamestarted == false){
@@ -140,6 +182,7 @@ var gameOb = {
           		document.getElementById("guessedletters").innerHTML = "";
           		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
           		document.getElementById("remguess").innerHTML = this.guessremaining;
+          		document.getElementById("bandimg").src = this.imgmap[this.currentband];
 			}
 			else {
 					if(this.guessedletters.indexOf(keyhit) == -1){
