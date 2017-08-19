@@ -25,6 +25,10 @@ body{
 }
 .divborder{
 	border:5px dotted white;
+	height:380px;
+	
+}
+#postinfodiv{
 	
 }
 #bandimg{
@@ -36,30 +40,31 @@ body{
 	padding-bottom:100px;
 }
 #hgman{
-
+    max-height:320px;
 	width:100%;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top:50px;
+	margin-top:40px;
 	margin-bottom:50px;
 	text-align: center;
-	padding-bottom:20px;
+	padding-bottom:56px;
+	
 }
 #cword{
-	margin-top:15px;
+	margin-top:20px;
 }
 #dottedword{
 	margin-top:20px;
-	margin-bottom:20px;
+	margin-bottom:40px;
 }
 #remguess{
-	margin-bottom:20px;
+	margin-bottom:5px;
 }
 #guessedletter{
 	margin-top:20px;
 }
 #gletters{
-	margin-top:20px;
+	margin-top:30px;
 }
 .footer{
   margin-top:50px;
@@ -91,7 +96,7 @@ body{
 <br/>
 <div class="container col-sm-offset-2">
 <div class ="row">
-<div class="col-xs-12 col-sm-4 col-md-4 divborder">
+<div id="postinfodiv" class="col-xs-12 col-sm-4 col-md-4 divborder">
 <img src="./assets/images/postrock3.jpg" class="img-responsive" id="bandimg">
 <p id="postrinfo">Postrock music is awesome. Its suited for coding.
 Tunes are mellow and you need to be thinkful</p>
@@ -121,163 +126,7 @@ Tunes are mellow and you need to be thinkful</p>
 <div class="fb-like" data-href="https://priteshkumar.github.io/Hangman/" data-width="50" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 </div>
 </footer>
-<script>
-document.getElementById("dottedword").innerHTML = "_ _ _ _ _ _";
-var guessallowed = 15;
-var bandarr = ["mokhov","caspian","emancipator","ifthesetrees","tiesto","armin","oakenfold","orjannielsen","charris","mogwai","hammock","daftpunk","pvandyk","godisast",
-				"xxintro","daysofstatic","maserati","redsparrowes","russiancircle","explosioninsky"];
-var bandimages = {
-					mokhov:"./assets/images/mokhov.jpg",
-					caspian:"./assets/images/caspian.jpg",
-					emancipator:"./assets/images/postrock3.jpg",
-					ifthesetrees:"./assets/images/ifthesetrees.jpg",
-					tiesto:"./assets/images/tiesto.jpg",
-					armin:"./assets/images/armin.jpg",
-					oakenfold:"./assets/images/oakenfold.jpg",
-					orjannielsen:"./assets/images/mos.jpg",
-					charris:"./assets/images/mountain.jpg",
-					mogwai:"./assets/images/mogwai.jpg",
-					hammock:"./assets/images/postrock2.jpg",
-					daftpunk:"./assets/images/daftpunk.jpg",
-					pvandyk:"./assets/images/oakenfold.jpg",
-					godisast:"./assets/images/astro.jpg",
-					xxintro:"./assets/images/astro.jpg",
-					daysofstatic:"./assets/images/daysofstatic.jpg",
-					maserati:"./assets/images/maserati.jpg",
-					redsparrowes:"./assets/images/mos.jpg",
-					russiancircle:"./assets/images/russiancircles.jpg",
-					explosioninsky:"./assets/images/explosionsinsky.jpg"
-};
-
-var gameOb = {
-	    arr:bandarr,
-	    imgmap:bandimages,
-	    wins:0,
-	    curbanddocstring:"",
-	    currentband:"empty",
-	    matchband:[],
-	    gamestarted:false,
-	    wordguessed:false,
-	    guessremaining:15,
-	    guessedletters:[],
-	    matchlen:0,
-	    resetGame:function(){
-	    	console.log("game reset");
-	    	this.matchlen = 0;
-	    	this.wordguessed = false;
-	    	this.guessremaining = 15;
-	    	var arrindex = Math.floor((Math.random() * 20) + 1);
-          	this.currentband = this.arr[arrindex-1];
-          	this.curbanddocstring ="";
-          	console.log(arrindex);
-          	console.log(this.currentband);
-          	this.matchband  = [];
-        	this.guessedletters = [];
-       
-        	console.log(this.currentband);
-	    	for(var i =0;i < this.currentband.length;i++)
-          		{
-          			this.matchband.push('_');
-          			this.matchband.push(' ');
-          			this.curbanddocstring = this.curbanddocstring + "_ ";
-          		}
-          	console.log(this.matchband.length);
-          	console.log(this.matchband);
-          	document.getElementById("remguess").innerHTML = this.guessremaining;
-          	document.getElementById("guessedletters").innerHTML = "";
-    		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
-    		document.getElementById("bandimg").src = this.imgmap[this.currentband];
-	    },
-	    gameControl:function(keyhit){
-	    	if(this.guessremaining === guessallowed && this.gamestarted == false){
-	    		this.gamestarted = true;
-	    		this.matchlen = 0;
-          		var arrindex = Math.floor((Math.random() * 12) + 1);
-          		this.currentband = this.arr[arrindex];
-          		for(var i =0;i < this.currentband.length;i++)
-          		{
-          			this.matchband.push('_');
-          			this.matchband.push(' ');
-          			this.curbanddocstring = this.curbanddocstring + "_ ";
-          		}
-          		console.log(this.currentband);
-          		console.log(this.matchband.length);
-          		console.log(this.matchband);
-          		document.getElementById("guessedletters").innerHTML = "";
-          		document.getElementById("dottedword").innerHTML = this.curbanddocstring;
-          		document.getElementById("remguess").innerHTML = this.guessremaining;
-          		document.getElementById("bandimg").src = this.imgmap[this.currentband];
-			}
-			else {
-					if(this.guessedletters.indexOf(keyhit) == -1){
-						this.guessedletters.push(keyhit);
-						this.guessremaining = this.guessremaining -1;
-						this.displayguessedLetter(keyhit);				
-					
-					var text="";
-					if( this.currentband.indexOf(keyhit) != -1){
-						console.log("key match found:  " + keyhit);
-						console.log(text);
-						for(var i=0;i < this.currentband.length ;i++){
-							if(this.currentband[i] == keyhit){
-								//store the indexes for update 
-								console.log(this.currentband[i] + "  :"  + i + keyhit)
-							    this.matchband[i*2] = keyhit;
-							    this.matchlen = this.matchlen + 1;
-							}
-						}
-						for (var i=0;i < this.matchband.length;i++){
-							text = text + this.matchband[i]
-						}
-						console.log(this.matchband);
-						document.getElementById("dottedword").innerHTML = text;
-						if (this.currentband.length == this.matchlen){
-							this.wins = this.wins +1;
-							this.wordguessed = true;
-							document.getElementById("wins").innerHTML = "Wins: " + this.wins;
-							var apl = document.getElementById("aplay");
-							apl.addEventListener('seeked',function(){
-								apl.play();
-							},true);
-							apl.currentTime = 1.0;
-							apl.addEventListener('timeupdate',function(){
-								if (apl.currentTime > 6){
-									apl.pause();
-								}
-							});
-
-						}
-					}
-				}
-					if(this.guessremaining == 0 || this.wordguessed == true){
-						console.log("noguessremaningreset");
-						this.resetGame();
-					}
-
-				}
-
-	 	},
-	    displayguessedLetter:function(keyhit) {
-	    	console.log(this.guessedletters);
-	    	var gstring=" ";
-	    	for(var i=0;i < this.guessedletters.length;i++){
-               gstring = gstring + this.guessedletters[i] + " ";
-	    	}
-	    	console.log(gstring);
-	    	document.getElementById("guessedletters").innerHTML = gstring;
-			document.getElementById("remguess").innerHTML = this.guessremaining;
-
-	    }
-};
-
-console.log(gameOb);
-
-document.onkeyup = function(event) {
-    var keyhit = event.key;
-   gameOb.gameControl(keyhit);
-};
-
-</script>
+<script src=./assets/js/game.js></script>
 </body>
 </html>
 

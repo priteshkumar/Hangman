@@ -1,4 +1,132 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangman</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style>
 
+.jumbotron{
+	text-align: center;
+	background-image: url(./assets/images/postrock2.jpg);
+}
+#head{
+	color:#212121;
+	font-weight:bold;
+	font-size: 60px;
+
+
+}
+body{
+	background:black;
+	color:blue;
+
+}
+.divborder{
+	border:5px dotted white;
+	height:380px;
+	
+}
+#postinfodiv{
+	
+}
+#bandimg{
+	width:200px;
+	height:200px;
+
+}
+#postrinfo{
+	padding-bottom:100px;
+}
+#hgman{
+    max-height:320px;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:40px;
+	margin-bottom:50px;
+	text-align: center;
+	padding-bottom:56px;
+	
+}
+#cword{
+	margin-top:20px;
+}
+#dottedword{
+	margin-top:20px;
+	margin-bottom:40px;
+}
+#remguess{
+	margin-bottom:5px;
+}
+#guessedletter{
+	margin-top:20px;
+}
+#gletters{
+	margin-top:30px;
+}
+.footer{
+  margin-top:50px;
+  width:100%;
+  height:80px;
+  color:#ccc;
+  background: black;
+  text-align: center;
+  font-size:14px;
+}
+</style>
+</head>
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div class="container">
+<div class="jumbotron">
+<h1 id="head">HANGMAN</h1>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<div class="container col-sm-offset-2">
+<div class ="row">
+<div id="postinfodiv" class="col-xs-12 col-sm-4 col-md-4 divborder">
+<img src="./assets/images/postrock3.jpg" class="img-responsive" id="bandimg">
+<p id="postrinfo">Postrock music is awesome. Its suited for coding.
+Tunes are mellow and you need to be thinkful</p>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-6 divborder">
+<div id="hgman">
+<h3>PRESS ANY KEY TO GET STARTED.</h3>
+<span id="wins">WINS: </span>
+<div id="cword">
+<div>CURRENT WORD</div>
+<div id="dottedword">_ _ _ _ _ _ </div>
+</div>
+<div>NUMBER OF GUESSES REMAINING</div>
+<span id="remguess">15</span>
+
+<div id="gletters">LETTERS ALREADY GUESSED</div>
+<span id="guessedletters"> </span>
+<div id="audiodiv">
+<audio id="aplay" src="./assets/audio/mokhov.mp3"></audio>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+<div class="container">
+<div class="fb-like" data-href="https://priteshkumar.github.io/Hangman/" data-width="50" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
+</div>
+</footer>
+<script>
 document.getElementById("dottedword").innerHTML = " ";
 var guessallowed = 15;
 var bandarr = ["mokhov","caspian","avicii","ifthesetrees","tiesto","armin","oakenfold","davidguetta","calvinharris","mogwai","eminem","daftpunk","linkinpark","astro",
@@ -153,3 +281,8 @@ document.onkeyup = function(event) {
     var keyhit = event.key;
    gameOb.gameControl(keyhit);
 };
+
+</script>
+</body>
+</html>
+
